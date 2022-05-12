@@ -9,6 +9,6 @@ export const AppDataSource = new DataSource({
   type: "better-sqlite3",
   database: "./jmdict.sqlite3",
   synchronize: false,
-  logging: true,
+  logging: false,
   entities: [entry, kanji, kanji_code, reading, sense],
 });

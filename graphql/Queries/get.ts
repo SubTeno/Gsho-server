@@ -12,19 +12,20 @@ const entry = {
   },
   async resolve(parent: any, args: any) {
     var hiragana, katakana;
-    if (!wanakana.isKana(args.query)) {
-      hiragana = wanakana.toHiragana(args.query);
-      katakana = wanakana.toKatakana(args.query);
-    }
+    const query = args.query;
+    hiragana = wanakana.toHiragana(query);
+    katakana = wanakana.toKatakana(query);
 
     var res = await entrie.find({
       where: [
-        { reading: { elem: Like(`%${hiragana}%`) } },
-        { reading: { elem: Like(`%${katakana}%`) } },
-        { sense: { gloss: Like(`%${args.query}%`) } },
+        { reading: { elem: Like(`${hiragana}%`) } },
+        { reading: { elem: Like(`${katakana}%`) } },
+        { sense: { gloss: Like(`${query} %`) } },
+        { kanji: { elem: query } },
       ],
       order: {
         prio: "DESC",
+        rank: "ASC",
       },
       take: args.limit,
       relations: ["kanji", "kanji_code", "reading", "sense"],
