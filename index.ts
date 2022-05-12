@@ -4,7 +4,6 @@ import { graphqlHTTP } from "express-graphql";
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import cors from "cors";
 import entry from "./graphql/Queries/get";
-import entries from "./graphql/Entities/entry";
 
 // GRAPHQL
 const query = new GraphQLObjectType({
@@ -16,7 +15,6 @@ const query = new GraphQLObjectType({
 
 var schema = new GraphQLSchema({
   query: query,
-  mutation: null,
 });
 //
 

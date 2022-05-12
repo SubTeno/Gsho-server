@@ -3,7 +3,6 @@ import { GraphQLList, GraphQLInt, GraphQLString } from "graphql";
 import entryType from "../TypeDefs/entry-type";
 import { Like } from "typeorm";
 import * as wanakana from "wanakana";
-
 const entry = {
   type: new GraphQLList(entryType),
   args: {
@@ -13,6 +12,7 @@ const entry = {
   async resolve(parent: any, args: any) {
     var hiragana, katakana;
     const query = args.query;
+
     hiragana = wanakana.toHiragana(query);
     katakana = wanakana.toKatakana(query);
 
@@ -20,16 +20,18 @@ const entry = {
       where: [
         { reading: { elem: Like(`${hiragana}%`) } },
         { reading: { elem: Like(`${katakana}%`) } },
-        { sense: { gloss: Like(`${query} %`) } },
+        { sense: { gloss_o: { gloss: query } } },
+        { sense: { gloss_o: { gloss: Like(`${query} %`) } } },
         { kanji: { elem: query } },
       ],
+      relationLoadStrategy: "query",
       order: {
-        prio: "DESC",
         rank: "ASC",
       },
       take: args.limit,
-      relations: ["kanji", "kanji_code", "reading", "sense"],
+      relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
     });
+
     return res;
   },
 };

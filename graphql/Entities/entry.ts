@@ -14,9 +14,7 @@ export default class entry extends BaseEntity {
   @Column()
   rank: number;
 
-  @Column({
-    type: "integer",
-  })
+  @Column()
   freq: number;
 
   @Column()

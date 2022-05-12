@@ -1,8 +1,19 @@
-import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  PrimaryColumn,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import entry from "./entry";
+import { gloss } from "./gloss";
 @Entity()
 export class sense {
   @PrimaryColumn()
+  sID: number;
+
+  @Column()
   entry: number;
 
   @Column()
@@ -10,9 +21,6 @@ export class sense {
 
   @Column()
   lang: string;
-
-  @PrimaryColumn()
-  gloss: string;
 
   @Column()
   info: number;
@@ -25,4 +33,7 @@ export class sense {
     name: "entry",
   })
   entry_o: entry;
+
+  @OneToMany(() => gloss, (gloss) => gloss.sense)
+  gloss_o: gloss[];
 }
