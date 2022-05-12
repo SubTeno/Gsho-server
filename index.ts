@@ -1,3 +1,12 @@
+// Hello ✋
+// 
+// Welcome to the server side of Gsho💙
+// 
+// This Application Uses Express, jmdict's db, better-sqlite3, TypeORM, GraphQL.JS, AND MUCH MORE!!! 🎆
+// Theres not much comment to help understand the application, sorry.. 🤣
+// 
+// 🤝Inspired by Lorenzi's jisho
+// 💝Created by SubTeno💝
 import { AppDataSource } from "./data-source";
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
