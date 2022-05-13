@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn, Index } from "typeorm";
 import entry from "./entry";
 @Entity()
 export class reading {
+  @Index()
   @PrimaryColumn()
   entry: number;
 

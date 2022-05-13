@@ -1,7 +1,8 @@
-import { Entity, ManyToOne, PrimaryColumn, JoinColumn } from "typeorm";
+import { Entity, ManyToOne, PrimaryColumn, JoinColumn, Index } from "typeorm";
 import { sense } from "./sense";
 @Entity()
 export class gloss {
+  @Index()
   @PrimaryColumn()
   sID: number;
 

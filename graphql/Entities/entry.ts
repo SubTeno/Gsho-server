@@ -8,7 +8,9 @@ export default class entry extends BaseEntity {
   @PrimaryColumn()
   seq: number;
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   jlpt: number;
 
   @Column()
@@ -17,7 +19,9 @@ export default class entry extends BaseEntity {
   @Column()
   freq: number;
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   prio: number;
 
   @Column()

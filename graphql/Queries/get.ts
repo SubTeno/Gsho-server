@@ -28,6 +28,7 @@ const entry = {
       order: {
         rank: "ASC",
       },
+      cache:true,
       take: args.limit,
       relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
     });
