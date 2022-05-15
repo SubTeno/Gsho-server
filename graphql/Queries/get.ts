@@ -8,10 +8,11 @@ const entry = {
   args: {
     query: { type: GraphQLString! },
     limit: { type: GraphQLInt! },
+    skip: {type: GraphQLInt!}
   },
   async resolve(parent: any, args: any) {
     var hiragana, katakana;
-    const query = args.query;
+    const {query, limit , skip} = args;
 
     hiragana = wanakana.toHiragana(query);
     katakana = wanakana.toKatakana(query);
@@ -28,8 +29,9 @@ const entry = {
       order: {
         rank: "ASC",
       },
+      skip: skip,
       cache:true,
-      take: args.limit,
+      take: limit,
       relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
     });
 
