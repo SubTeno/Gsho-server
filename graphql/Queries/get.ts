@@ -1,40 +1,82 @@
 import entrie from "./../Entities/entry";
 import { GraphQLList, GraphQLInt, GraphQLString } from "graphql";
 import entryType from "../TypeDefs/entry-type";
-import { Like } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Like } from "typeorm";
 import * as wanakana from "wanakana";
 const entry = {
   type: new GraphQLList(entryType),
   args: {
     query: { type: GraphQLString! },
     limit: { type: GraphQLInt! },
-    skip: {type: GraphQLInt!}
+    skip: { type: GraphQLInt! },
   },
+  // SEARCH ENGINE
   async resolve(parent: any, args: any) {
-    var hiragana, katakana;
-    const {query, limit , skip} = args;
+    const { query, limit, skip } = args;
+    var katakana, kanji, eng_like, eng, hiragana;
+    var test = wanakana.toHiragana(query);
 
-    hiragana = wanakana.toHiragana(query);
-    katakana = wanakana.toKatakana(query);
+    // VALIDATIONS
+    // THIS IS JAPANESE
+    if (wanakana.isJapanese(test)) {
+      if (wanakana.isKana(test)) {
+        //  THIS IS KANA
+        console.log("KANA CALLED");
+        hiragana = Like(`${test}%`);
+        katakana = Like(`${wanakana.toKatakana(query)}%`);
+      } else {
+        console.log("KANJI CALLED");
+        // THIS KANJI
+        kanji = query;
+      }
+    } else {
+      // THIS IS ENGLISH
+      console.log("ENGLISH CALLED");
+      eng = query;
+      eng_like = Like(`${query} %`);
+    }
 
+    // QUERY MAKING
     var res = await entrie.find({
       where: [
-        { reading: { elem: Like(`${hiragana}%`) } },
-        { reading: { elem: Like(`${katakana}%`) } },
-        { sense: { gloss_o: { gloss: query } } },
-        { sense: { gloss_o: { gloss: Like(`${query} %`) } } },
-        { kanji: { elem: query } },
+        // HIRAGANA
+        { ...{ reading: { ...{ elem: hiragana } } } },
+        // KATAKANA
+        { ...{ reading: { ...{ elem: katakana } } } },
+        // ENGLISH
+        { ...{ sense: { ...{ gloss_o: { ...{ gloss: eng } } } } } },
+        { ...{ sense: { ...{ gloss_o: { ...{ gloss: eng_like } } } } } },
+        // KANJI
+        { ...{ kanji: { ...{ elem: kanji } } } },
       ],
-      relationLoadStrategy: "query",
       order: {
         rank: "ASC",
       },
+      cache: true,
       skip: skip,
-      cache:true,
       take: limit,
       relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
     });
 
+    // LAST ATTEMPT FOR EMPTY SEARCH
+    if (!res[0]) {
+      eng = query;
+      eng_like = Like(`${query} %`);
+      res = await entrie.find({
+        where: [
+          { sense: { gloss_o: { gloss: eng } } },
+          { sense: { gloss_o: { gloss: eng_like } } },
+        ],
+        order: {
+          rank: "ASC",
+        },
+        cache: true,
+        skip: skip,
+        take: limit,
+        relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
+      });
+    }
+    // RETURN
     return res;
   },
 };
