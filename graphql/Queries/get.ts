@@ -21,17 +21,14 @@ const entry = {
     if (wanakana.isJapanese(test)) {
       if (wanakana.isKana(test)) {
         //  THIS IS KANA
-        console.log("KANA CALLED");
         hiragana = Like(`${test}%`);
         katakana = Like(`${wanakana.toKatakana(query)}%`);
       } else {
-        console.log("KANJI CALLED");
         // THIS KANJI
         kanji = query;
       }
     } else {
       // THIS IS ENGLISH
-      console.log("ENGLISH CALLED");
       eng = query;
       eng_like = Like(`${query} %`);
     }

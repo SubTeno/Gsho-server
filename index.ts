@@ -1,10 +1,10 @@
 // Hello ✋
-// 
+//
 // Welcome to the server side of Gsho💙
-// 
+//
 // This Application Uses Express, jmdict's db, better-sqlite3, TypeORM, GraphQL.JS, AND MUCH MORE!!! 🎆
 // Theres not much comment to help understand the application, sorry.. 🤣
-// 
+//
 // 🤝Inspired by Lorenzi's jisho
 // 💝Created by SubTeno💝
 import { AppDataSource } from "./data-source";
@@ -29,16 +29,11 @@ var schema = new GraphQLSchema({
 
 // INITIALIZING EXPRESS
 const main = async () => {
-  // CORS OPTION
-  const corsOptions = {
-    origin: "http://localhost:3000",
-    optionsSuccessStatus: 200,
-  };
   // EXPRESS SERVER
   const app = express();
   const port = 3001;
   // CORS
-  app.use(cors(corsOptions));
+  app.use(cors());
   // JSON
   app.use(express.json());
   // GRAPHQL

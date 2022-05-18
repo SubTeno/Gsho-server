@@ -4,7 +4,7 @@ export const AppDataSource = new DataSource({
   type: "better-sqlite3",
   database: "./jmdict.sqlite3",
   synchronize: false,
-  logging: true,
+  logging: false,
   cache:true,
   entities: ["./graphql/Entities/*"],
   relationLoadStrategy:"query"
