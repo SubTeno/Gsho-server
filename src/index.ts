@@ -49,6 +49,8 @@ const main = async () => {
     res.status(404).send("Get out....");
   });
   // INITALIZING DB
+  console.log(AppDataSource.entityMetadatas);
+
   await AppDataSource.initialize()
     .then(() => console.log("DB INITIALIZED"))
     .catch((e) => console.log(e));

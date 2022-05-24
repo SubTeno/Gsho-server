@@ -11,29 +11,29 @@ import { gloss } from "./gloss";
 @Entity()
 export class sense {
   @PrimaryColumn()
-  sID: number;
+  sID!: number;
 
   @Column()
-  entry: number;
+  entry!: number;
 
   @Column()
-  pos: string;
+  pos!: string;
 
   @Column()
-  lang: string;
+  lang!: string;
 
   @Column()
-  info: number;
+  info!: number;
 
   @Column()
-  xref: number;
+  xref!: number;
 
   @ManyToOne(() => entry, (entry) => entry.sense)
   @JoinColumn({
     name: "entry",
   })
-  entry_o: entry;
+  entry_o!: entry;
 
   @OneToMany(() => gloss, (gloss) => gloss.sense)
-  gloss_o: gloss[];
+  gloss_o!: gloss[];
 }

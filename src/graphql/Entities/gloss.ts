@@ -4,14 +4,14 @@ import { sense } from "./sense";
 export class gloss {
   @Index()
   @PrimaryColumn()
-  sID: number;
+  sID!: number;
 
   @PrimaryColumn()
-  gloss: string;
+  gloss!: string;
 
   @ManyToOne(() => sense, (sense) => sense.gloss_o)
   @JoinColumn({
     name: "sID",
   })
-  sense: sense;
+  sense!: sense;
 }

@@ -6,29 +6,29 @@ import { sense } from "./sense";
 @Entity()
 export default class entry extends BaseEntity {
   @PrimaryColumn()
-  seq: number;
+  seq!: number;
 
   @Column({
     nullable: true
   })
-  jlpt: number;
+  jlpt!: number;
 
   @Column()
-  rank: number;
+  rank!: number;
 
   @Column()
-  freq: number;
+  freq!: number;
 
   @Column({
     nullable: true
   })
-  prio: number;
+  prio!: number;
 
   @Column()
-  noun: boolean;
+  noun!: boolean;
 
   @Column()
-  verb: boolean;
+  verb!: boolean;
 
   @OneToMany(() => kanji_code, (kanji_code) => kanji_code.entry_o)
   kanji_code!: kanji_code[];

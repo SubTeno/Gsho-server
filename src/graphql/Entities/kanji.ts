@@ -1,26 +1,26 @@
 import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn, Index } from "typeorm";
 import entry from "./entry";
 @Entity()
-export class reading {
+export class kanji {
   @Index()
   @PrimaryColumn()
-  entry: number;
+  entry!: number;
 
   @PrimaryColumn()
-  elem: string;
+  elem!: string;
 
   @Column()
-  restr: string;
+  chars!: string;
 
   @Column()
-  info: string;
+  info!: string;
 
   @Column()
-  prio: number;
+  prio!: number;
 
-  @ManyToOne(() => entry, (entry) => entry.reading)
+  @ManyToOne(() => entry, (entry) => entry.kanji)
   @JoinColumn({
     name: "entry",
   })
-  entry_o: entry;
+  entry_o!: entry;
 }

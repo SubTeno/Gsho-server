@@ -1,6 +1,6 @@
 import entrie from "./../Entities/entry";
 import { GraphQLList, GraphQLInt, GraphQLString } from "graphql";
-import entryType from "../TypeDefs/entry-type";
+import entryType from "./../TypeDefs/entry-type";
 import { Like } from "typeorm";
 import * as wanakana from "wanakana";
 const entry = {
@@ -13,6 +13,7 @@ const entry = {
   // SEARCH ENGINE
   async resolve(parent: any, args: any) {
     const { query, limit, skip } = args;
+    
     var katakana, kanji, eng_like, eng, hiragana;
     var test = wanakana.toHiragana(query);
 
@@ -54,7 +55,7 @@ const entry = {
       take: limit,
       relations: ["kanji", "kanji_code", "reading", "sense", "sense.gloss_o"],
     });
-
+    
     // LAST ATTEMPT FOR EMPTY SEARCH
     if (!res[0]) {
       eng = query;
