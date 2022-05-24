@@ -1,7 +1,7 @@
 import entrie from "./../Entities/entry";
 import { GraphQLList, GraphQLInt, GraphQLString } from "graphql";
 import entryType from "../TypeDefs/entry-type";
-import { FindOneOptions, FindOptionsWhere, Like } from "typeorm";
+import { Like } from "typeorm";
 import * as wanakana from "wanakana";
 const entry = {
   type: new GraphQLList(entryType),

@@ -31,7 +31,7 @@ var schema = new GraphQLSchema({
 const main = async () => {
   // EXPRESS SERVER
   const app = express();
-  const port = 3001;
+  const PORT = process.env.PORT || 3001;
   // CORS
   app.use(cors());
   // JSON
@@ -53,8 +53,8 @@ const main = async () => {
     .then(() => console.log("DB INITIALIZED"))
     .catch((e) => console.log(e));
 
-  app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+  app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
   });
 };
 //
