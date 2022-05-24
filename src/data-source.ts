@@ -6,7 +6,7 @@ import { kanji } from './graphql/Entities/kanji';
 import { DataSource } from "typeorm";
 import entry from './graphql/Entities/entry';
 
-
+// Data Source
 export const AppDataSource = new DataSource({
   type: "better-sqlite3",
   database: "./jmdict.sqlite3",
