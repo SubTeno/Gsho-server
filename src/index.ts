@@ -13,6 +13,7 @@ import { graphqlHTTP } from "express-graphql";
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import cors from "cors";
 import entry from "./graphql/Queries/get";
+import helmet from "helmet";
 
 // GRAPHQL
 const query = new GraphQLObjectType({
@@ -31,7 +32,9 @@ var schema = new GraphQLSchema({
 const main = async () => {
   // EXPRESS SERVER
   const app = express();
-  const PORT = process.env.PORT || 3001;
+  const PORT = process.env.PORT || 3021;
+  // HELMET
+  app.use(helmet());
   // CORS
   app.use(cors());
   // JSON
@@ -41,16 +44,13 @@ const main = async () => {
     "/graphql",
     graphqlHTTP({
       schema: schema,
-      graphiql: true,
     })
   );
   // HANDLING UNHANDLED ROUTES
-  app.get("*", (_req, res) => {
+  app.get("*", (req:any, res:any) => {
     res.status(404).send("Get out....");
   });
   // INITALIZING DB
-  console.log(AppDataSource.entityMetadatas);
-
   await AppDataSource.initialize()
     .then(() => console.log("DB INITIALIZED"))
     .catch((e) => console.log(e));
